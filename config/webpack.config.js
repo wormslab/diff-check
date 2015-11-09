@@ -1,7 +1,7 @@
 module.exports = {
     entry: [ __dirname + "/../public/js/app.js" ],
     output: {
-        path: __dirname + "/../public/build",
+        path: __dirname + "/../public/build/",
         filename: "bundle.js"
     },
     module: {
@@ -11,3 +11,5 @@ module.exports = {
         ]
     }
 };
+
+console.log(__dirname)

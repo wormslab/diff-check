@@ -2,11 +2,12 @@
   "use strict";
 
   let React = require('react')
+    , ReactDOM = require('react-dom')
     , DiffApp = require('./components/DiffApp');
 
   require("../css/site.less");
 
-  React.render(
+  ReactDOM.render(
     <DiffApp />,
     document.getElementById('app')
   );
