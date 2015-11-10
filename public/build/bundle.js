@@ -19615,6 +19615,7 @@
 	  "use strict";
 
 	  var React = __webpack_require__(1),
+	      Nav = __webpack_require__(164),
 	      InputArea = __webpack_require__(159);
 
 	  var DiffApp = React.createClass({
@@ -19624,6 +19625,7 @@
 	      return React.createElement(
 	        'div',
 	        null,
+	        React.createElement(Nav, null),
 	        React.createElement(
 	          'div',
 	          { className: 'flex-row-start-center' },
@@ -20003,6 +20005,49 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	(function () {
+	  "use strict";
+	  var React = __webpack_require__(1);
+
+	  var Nav = React.createClass({
+	    displayName: "Nav",
+
+	    render: function render() {
+	      return React.createElement(
+	        "div",
+	        { className: "flex-row-start-center navigation" },
+	        React.createElement(
+	          "div",
+	          { className: "navigation-item" },
+	          "DIFF"
+	        ),
+	        React.createElement("div", { className: "navigation-clear-space" }),
+	        React.createElement(
+	          "div",
+	          { className: "navigation-buttons" },
+	          React.createElement(
+	            "button",
+	            { className: "btn btn-default btn-sm" },
+	            "Sign up"
+	          ),
+	          React.createElement(
+	            "button",
+	            { className: "btn btn-success btn-sm" },
+	            "Create free account"
+	          )
+	        )
+	      );
+	    }
+	  });
+	  module.exports = Nav;
+	})();
 
 /***/ }
 /******/ ]);

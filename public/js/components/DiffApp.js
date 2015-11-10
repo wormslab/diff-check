@@ -2,12 +2,14 @@
   "use strict";
 
   let React = require('react')
+    , Nav = require('./Nav')
     , InputArea = require('./InputArea');
 
   let DiffApp = React.createClass({
     render: function() {
       return (
         <div>
+          <Nav />
           <div className="flex-row-start-center">
             <InputArea ace="left-input" className="flex-row-start-center" desc="ORIGINAL TEXT" />
             <InputArea ace="right-input" className="flex-row-start-center" desc="CHANGED TEXT" />
