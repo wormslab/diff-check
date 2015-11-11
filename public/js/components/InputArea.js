@@ -1,20 +1,27 @@
 (function() {
   "use strict";
-  let React = require('react');
+  let React = require('react')
+    , InputStore = require('../stores/InputStore')
+    , InputText = require('./InputText');
 
   let InputArea = React.createClass({
+    
     componentDidMount: function() {
-      this.editor = ace.edit(this.props.ace);
-      this.editor.setTheme("ace/theme/solarized_dark");
-      this.editor.getSession().setMode("ace/mode/text");
+      function createAceInstance(id, text) {
+        let editor = ace.edit(id);
+        editor.setTheme("ace/theme/solarized_dark");
+        editor.getSession().setMode("ace/mode/text");
+        return editor;
+      }
+      InputStore.setOriginalAceEditor(createAceInstance("original-editor"));
+      InputStore.setChangedAceEditor(createAceInstance("changed-editor"));
     },
+
     render: function() {
       return (
-        <div className="text-box">
-          <div className="text-label">
-            <span className="label label-default">{this.props.desc}</span>
-          </div>
-          <div id={this.props.ace} className="input-textarea"></div>
+        <div className="flex-row-start-center">
+          <InputText ace="original-editor" className="flex-row-start-center" desc="ORIGINAL TEXT" />
+          <InputText ace="changed-editor" className="flex-row-start-center" desc="CHANGED TEXT" />
         </div>
       );
     },

@@ -10,13 +10,21 @@
     originalEditor: null,
     changedEditor: null
   }
+  let _viewerObj = {
+    originalViewer: null,
+    changedViewer: null
+  }
+  let complete = false;
 
   let InputStore = assign({}, EventEmitter.prototype, {
 
     getPairText: function() {
       return {
         originalText: this.getOriginalText(),
-        changedText: this.getChangedText()
+        changedText: this.getChangedText(),
+        originalViewerText: this.getOriginalViewerText(),
+        chagnedViewerText: this.getChangedViewerText(),
+        complete: complete
       };
     },
 
@@ -30,6 +38,16 @@
       return editor ? editor.session.getValue() : '';
     },
 
+    getOriginalViewerText: function() {
+      let editor = _viewerObj.originalViewer;
+      return editor ? editor.session.getValue() : '';
+    },
+
+    getChangedViewerText: function() {
+      let editor = _viewerObj.changedViewer;
+      return editor ? editor.session.getValue() : '';
+    },
+
     emitChange: function() {
       this.emit(CHANGE_EVENT);
     },
@@ -40,6 +58,14 @@
 
     setChangedAceEditor: function(editor) {
       _editorObj.changedEditor = editor;
+    },
+
+    setOriginalAceViewer: function(editor) {
+      _viewerObj.originalVIewer = editor;
+    },
+
+    setChangedAceViewer: function(editor) {
+      _viewerObj.changedViewer = editor;
     },
 
     /**
@@ -62,11 +88,11 @@
       case DiffConstants.DIFF_POST:
         let data = InputStore.getPairText();
         $.post('http://localhost:3000/difference', data, function(response) {
-          console.log(response);
+          complete = true;
+          InputStore.emitChange();
         }).fail(function(err) {
           console.log(err);
         });
-        InputStore.emitChange();
         break;
       case DiffConstants.DIFF_COMPLETE:
         break;
