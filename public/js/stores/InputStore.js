@@ -18,7 +18,15 @@
 
   let InputStore = assign({}, EventEmitter.prototype, {
 
-    getPairText: function() {
+    getEditorObj: function() {
+      return _editorObj;
+    },
+
+    getViewerObj: function() {
+      return _viewerObj;
+    },
+
+    getAllPairText: function() {
       return {
         originalText: this.getOriginalText(),
         changedText: this.getChangedText(),
@@ -26,6 +34,20 @@
         chagnedViewerText: this.getChangedViewerText(),
         complete: complete
       };
+    },
+
+    getPairEditor: function() {
+      return {
+        originalText: this.getOriginalText(),
+        changedText: this.getChangedText()
+      }
+    },
+
+    getPairViewer: function() {
+      return {
+        originalViewerText: this.getOriginalViewerText(),
+        chagnedViewerText: this.getChangedViewerText()
+      }
     },
 
     getOriginalText: function() {
@@ -86,15 +108,13 @@
   InputStore.dispatchToken = DiffAppDispatcher.register(function(action) {
     switch(action.actionType) {
       case DiffConstants.DIFF_POST:
-        let data = InputStore.getPairText();
+        let data = InputStore.getPairEditor();
         $.post('http://localhost:3000/difference', data, function(response) {
           complete = true;
           InputStore.emitChange();
         }).fail(function(err) {
           console.log(err);
         });
-        break;
-      case DiffConstants.DIFF_COMPLETE:
         break;
       default:
         // no op

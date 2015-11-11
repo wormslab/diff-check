@@ -19,13 +19,17 @@
     },
 
     render: function() {
+      let _viewerObj = InputStore.getViewerObj();
+      _viewerObj.originalViewer.session.setValue(data);
+      _viewerObj.changedViewer.session.setValue(data);
       return (
         <div className="flex-row-start-center">
           <InputView ace="original-viewer" className="flex-row-start-center" desc="ORIGINAL SIDE" />
           <InputView ace="changed-viewer" className="flex-row-start-center" desc="CHANGED SIDE" />
         </div>
       );
-    },
+    }
+
   });
   module.exports = DiffArea;
 })();

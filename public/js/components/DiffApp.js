@@ -11,7 +11,7 @@
   let DiffApp = React.createClass({
 
     getInitialState: function() {
-      return InputStore.getPairText();
+      return InputStore.getAllPairText();
     },
 
     componentDidMount: function() {
@@ -23,15 +23,14 @@
     },
 
     render: function() {
+      let DiffAreaDOM = null;
+      if (this.state.complete) {
+        DiffAreaDOM = <DiffArea />;
+      }
       return (
         <div>
           <Nav />
-          {function(){
-            if (this.state.complete) {
-              <DiffArea />
-            }
-          }.call(this)}
-          <DiffArea />
+          {DiffAreaDOM}
           <InputArea />
           <div className="flex-row-center-center">
             <button className="btn btn-success" onClick={this.submitForComparison}>Find Difference</button>
@@ -41,9 +40,7 @@
     },
 
     _onChange: function() {
-      console.log('-------------- on change')
-      console.log(InputStore.getPairText());
-      this.setState(InputStore.getPairText());
+      this.setState(InputStore.getAllPairText());
     }
   });
   module.exports = DiffApp;
