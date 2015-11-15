@@ -9,8 +9,8 @@
     render: function() {
       return (
         <div className="flex-row-start-center">
-          <TextEditor ace={DC.ORIGINAL_EDITOR} className="flex-row-start-center" desc="ORIGINAL TEXT" />
-          <TextEditor ace={DC.CHANGED_EDITOR} className="flex-row-start-center" desc="CHANGED TEXT" />
+          <TextEditor ace={DC.ORIGINAL_EDITOR} side="original" className="flex-row-start-center" desc="ORIGINAL TEXT" />
+          <TextEditor ace={DC.CHANGED_EDITOR} side="changed" className="flex-row-start-center" desc="CHANGED TEXT" />
         </div>
       );
     },
