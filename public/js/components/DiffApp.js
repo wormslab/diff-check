@@ -3,35 +3,36 @@
 
   let React = require('react')
     , Nav = require('./Nav')
-    , InputArea = require('./InputArea')
-    , DiffArea = require('./DiffArea')
+    , EditorArea = require('./EditorArea')
+    , ViewerArea = require('./ViewerArea')
     , InputStore = require('../stores/InputStore')
-    , DiffActions = require('../actions/DiffActions');
+    , DiffActions = require('../actions/DiffActions')
+    , DC = require('../constants/DiffConstants');
 
   let DiffApp = React.createClass({
 
     getInitialState: function() {
-      return InputStore.getAllPairText();
-    },
-
-    componentDidMount: function() {
-      InputStore.addChangeListener(this._onChange);
+      return { complete: false };
     },
 
     submitForComparison: function() {
       DiffActions.postDataForComparison();
     },
 
+    componentDidMount: function() {
+      InputStore.addChangeListener(DC.DIFF_COMPLETE, this._onDiffComplete);
+    },
+
     render: function() {
-      let DiffAreaDOM = null;
+      let ViewerAreaDOM = null;
       if (this.state.complete) {
-        DiffAreaDOM = <DiffArea />;
+        ViewerAreaDOM = <ViewerArea />;
       }
       return (
         <div>
           <Nav />
-          {DiffAreaDOM}
-          <InputArea />
+          {ViewerAreaDOM}
+          <EditorArea />
           <div className="flex-row-center-center">
             <button className="btn btn-success" onClick={this.submitForComparison}>Find Difference</button>
           </div>
@@ -39,8 +40,8 @@
       );
     },
 
-    _onChange: function() {
-      this.setState(InputStore.getAllPairText());
+    _onDiffComplete: function() {
+      this.setState({ complete: true });
     }
   });
   module.exports = DiffApp;

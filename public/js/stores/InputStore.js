@@ -2,116 +2,80 @@
   "use strict";
   let EventEmitter = require('events').EventEmitter
     , DiffAppDispatcher = require('../dispatcher/AppDispatcher')
-    , DiffConstants = require('../constants/DiffConstants')
+    , DC = require('../constants/DiffConstants')
     , assign = require('object-assign');
 
-  const CHANGE_EVENT = "change";
-  let _editorObj = {
-    originalEditor: null,
-    changedEditor: null
-  }
-  let _viewerObj = {
-    originalViewer: null,
-    changedViewer: null
-  }
-  let complete = false;
+  let _editorObj = {};
+  let _diffResultObj = {};
+  let diffComplete = false;
 
   let InputStore = assign({}, EventEmitter.prototype, {
 
-    getEditorObj: function() {
-      return _editorObj;
+    setEditor: function(id, editor) {
+      _editorObj[id] = editor;
     },
 
-    getViewerObj: function() {
-      return _viewerObj;
-    },
-
-    getAllPairText: function() {
-      return {
-        originalText: this.getOriginalText(),
-        changedText: this.getChangedText(),
-        originalViewerText: this.getOriginalViewerText(),
-        chagnedViewerText: this.getChangedViewerText(),
-        complete: complete
-      };
-    },
-
-    getPairEditor: function() {
-      return {
-        originalText: this.getOriginalText(),
-        changedText: this.getChangedText()
+    getEditor: function(id) {
+      if (!id) {
+        return _editorObj;
       }
+      return _editorObj[id];
     },
 
-    getPairViewer: function() {
-      return {
-        originalViewerText: this.getOriginalViewerText(),
-        chagnedViewerText: this.getChangedViewerText()
+    setEditorText: function(id, text) {
+      let editor = _editorObj[id];
+      if (!editor) {
+        return false;
       }
+      editor[id].session.setValue(text);
     },
 
-    getOriginalText: function() {
-      let editor = _editorObj.originalEditor;
-      return editor ? editor.session.getValue() : '';
+    getEditorText: function(id) {
+      let editor = _editorObj[id];
+      if (!editor) {
+        return '';
+      }
+      return editor.session.getValue();
     },
 
-    getChangedText: function() {
-      let editor = _editorObj.changedEditor;
-      return editor ? editor.session.getValue() : '';
+    getDiffResult: function() {
+      return _diffResultObj;
     },
 
-    getOriginalViewerText: function() {
-      let editor = _viewerObj.originalViewer;
-      return editor ? editor.session.getValue() : '';
+    setViewerResult: function() {
+      this.setEditorText(DC.ORIGINAL_VIEWER, _diffResultObj);
+      this.setEditorText(DC.CHANGED_VIEWER, _diffResultObj);
     },
 
-    getChangedViewerText: function() {
-      let editor = _viewerObj.changedViewer;
-      return editor ? editor.session.getValue() : '';
-    },
-
-    emitChange: function() {
-      this.emit(CHANGE_EVENT);
-    },
-
-    setOriginalAceEditor: function(editor) {
-      _editorObj.originalEditor = editor;
-    },
-
-    setChangedAceEditor: function(editor) {
-      _editorObj.changedEditor = editor;
-    },
-
-    setOriginalAceViewer: function(editor) {
-      _viewerObj.originalVIewer = editor;
-    },
-
-    setChangedAceViewer: function(editor) {
-      _viewerObj.changedViewer = editor;
+    emitChange: function(event) {
+      this.emit(event);
     },
 
     /**
      * @param {function} callback
      */
-    addChangeListener: function(callback) {
-      this.on(CHANGE_EVENT, callback);
+    addChangeListener: function(event, callback) {
+      this.on(event, callback);
     },
 
     /**
      * @param {function} callback
      */
-    removeChangeListener: function(callback) {
-      this.removeListener(CHANGE_EVENT, callback);
+    removeChangeListener: function(evnet, callback) {
+      this.removeListener(event, callback);
     }
   });
 
   InputStore.dispatchToken = DiffAppDispatcher.register(function(action) {
     switch(action.actionType) {
-      case DiffConstants.DIFF_POST:
-        let data = InputStore.getPairEditor();
+      case DC.DIFF_POST:
+        let data = {
+          original: InputStore.getEditorText(DC.ORIGINAL_EDITOR),
+          changed: InputStore.getEditorText(DC.CHANGED_EDITOR)
+        };
         $.post('http://localhost:3000/difference', data, function(response) {
-          complete = true;
-          InputStore.emitChange();
+          _diffResultObj = response;
+          InputStore.emitChange(DC.DIFF_COMPLETE);
         }).fail(function(err) {
           console.log(err);
         });

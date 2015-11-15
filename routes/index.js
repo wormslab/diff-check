@@ -11,8 +11,8 @@
   });
 
   router.post('/difference', function(req,res, next) {
-    let original = req.body.originalText;
-    let changed = req.body.changedText;
+    let original = req.body.original;
+    let changed = req.body.changed;
     try {
       res.json(diff(original, changed));
     } catch(err) {
