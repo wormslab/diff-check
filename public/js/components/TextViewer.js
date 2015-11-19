@@ -21,14 +21,27 @@
             printLines(childObj, editor, side);
           } else {
             if (obj[key]['lv'] && obj[key]['rv']) {
-              if (obj[key]['type'] === 'DI' && (side === 'original' || side === 'chaged')) {
-                editor.insert(key + ' = ' + obj[key]['lv'] + '\n');
+              if (obj[key]['type'] !== 'ID') {
+                if (side === 'original') {
+                  editor.insert(key + ' = ' + obj[key]['lv'] + '\n');
+                } else {
+                  editor.insert(key + ' = ' + obj[key]['rv'] + '\n');
+                }
+
+                let defaultLength = key.length + 3;
                 let pos = editor.getCursorPosition();
                 let R = ace.require("ace/range").Range;
-                var range = new R(pos.row - 1, obj[key]['start'], pos.row - 1, obj[key]['end']);
+                var range = new R(pos.row - 1, defaultLength + obj[key]['start'], pos.row - 1, defaultLength + obj[key]['end']);
                 var marker = editor.getSession().addMarker(range,"ace_different_area", "text");
-                console.log(range);
               } else {
+                editor.insert(key + ' = ' + obj[key]['rv'] + '\n');
+              }
+            } else if (obj[key]['type'] === 'LO'){
+              if (side === 'original') {
+                editor.insert(key + ' = ' + obj[key]['lv'] + '\n');
+              }
+            } else if (obj[key]['type'] === 'RO'){
+              if (side === 'changed') {
                 editor.insert(key + ' = ' + obj[key]['rv'] + '\n');
               }
             }
