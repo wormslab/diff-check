@@ -75,6 +75,7 @@
         };
         $.post('http://localhost:3000/difference', data, function(response) {
           _diffResultObj = response;
+          // console.log(require('util').inspect(response, {depth: null}));
           InputStore.emitChange(DC.DIFF_COMPLETE);
         }).fail(function(err) {
           console.log(err);

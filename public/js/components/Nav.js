@@ -10,10 +10,6 @@
             DIFF
           </div>
           <div className="navigation-clear-space"></div>
-          <div className="navigation-buttons">
-            <button className="btn btn-default btn-sm">Sign up</button>
-            <button className="btn btn-success btn-sm">Create free account</button>
-          </div>
         </div>
       );
     }

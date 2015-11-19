@@ -39,10 +39,20 @@
             } else if (obj[key]['type'] === 'LO'){
               if (side === 'original') {
                 editor.insert(key + ' = ' + obj[key]['lv'] + '\n');
+                let defaultLength = key.length + 3;
+                let pos = editor.getCursorPosition();
+                let R = ace.require("ace/range").Range;
+                var range = new R(pos.row - 1, 0, pos.row - 1, defaultLength + obj[key]['lv'].length);
+                var marker = editor.getSession().addMarker(range,"ace_added_area", "text");
               }
             } else if (obj[key]['type'] === 'RO'){
               if (side === 'changed') {
                 editor.insert(key + ' = ' + obj[key]['rv'] + '\n');
+                let defaultLength = key.length + 3;
+                let pos = editor.getCursorPosition();
+                let R = ace.require("ace/range").Range;
+                var range = new R(pos.row - 1, 0, pos.row - 1, defaultLength + obj[key]['rv'].length);
+                var marker = editor.getSession().addMarker(range,"ace_added_area", "text");
               }
             }
           }
