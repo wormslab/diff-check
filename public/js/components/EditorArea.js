@@ -8,9 +8,13 @@
   let EditorArea = React.createClass({
     render: function() {
       return (
-        <div className="flex-row-start-center">
-          <TextEditor ace={DC.ORIGINAL_EDITOR} side="original" className="flex-row-start-center" desc="ORIGINAL TEXT" />
-          <TextEditor ace={DC.CHANGED_EDITOR} side="changed" className="flex-row-start-center" desc="CHANGED TEXT" />
+        <div className="flex-row-center-center flex-row-max">
+          <div className="text-area">
+            <TextEditor ace={DC.ORIGINAL_EDITOR} side="original" desc="ORIGINAL TEXT" />
+          </div>
+          <div className="text-area">
+            <TextEditor ace={DC.CHANGED_EDITOR} side="changed" desc="CHANGED TEXT" />
+          </div>
         </div>
       );
     },

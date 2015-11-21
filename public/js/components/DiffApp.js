@@ -9,6 +9,9 @@
     , DiffActions = require('../actions/DiffActions')
     , DC = require('../constants/DiffConstants');
 
+  const RaisedButton = require('material-ui/lib/raised-button');
+  const FontIcon = require('material-ui/lib/font-icon');
+
   let DiffApp = React.createClass({
 
     getInitialState: function() {
@@ -29,12 +32,14 @@
         ViewerAreaDOM = <ViewerArea />;
       }
       return (
-        <div>
+        <div className="flex-row-center-center">
           <Nav />
           {ViewerAreaDOM}
           <EditorArea />
-          <div className="flex-row-center-center">
-            <button className="btn btn-success" onClick={this.submitForComparison}>Find Difference</button>
+          <div className="flex-row-center-center flex-row-max">
+            <RaisedButton secondary={true} onClick={this.submitForComparison} label="Check diff" labelPosition="after">
+              <FontIcon style={{color: "white", verticalAlign: "middle", marginLeft: "5px"}} className="material-icons" >autorenew</FontIcon>
+            </RaisedButton>
           </div>
         </div>
       );

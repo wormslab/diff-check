@@ -9,9 +9,13 @@
 
     render: function() {
       return (
-        <div className="flex-row-start-center">
-          <TextViewer ace={DC.ORIGINAL_VIEWER} side="original" className="flex-row-start-center" desc="ORIGINAL TEXT" />
-          <TextViewer ace={DC.CHANGED_VIEWER} side="changed" className="flex-row-start-center" desc="CHANGED TEXT" />
+        <div className="flex-row-center-center flex-row-max">
+          <div className="view-area">
+            <TextViewer ace={DC.ORIGINAL_VIEWER} side="original" desc="ORIGINAL TEXT" />
+          </div>
+          <div className="view-area">
+            <TextViewer ace={DC.CHANGED_VIEWER} side="changed" desc="CHANGED TEXT" />
+          </div>
         </div>
       );
     }

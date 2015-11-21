@@ -6,8 +6,8 @@
   let TextEditor = React.createClass({
     componentDidMount: function() {
       let editor = ace.edit(this.props.ace);
-      editor.setTheme("ace/theme/solarized_dark");
-      editor.getSession().setMode("ace/mode/text");
+      editor.setTheme("ace/theme/github");
+      editor.getSession().setMode("ace/mode/ini");
       editor.$blockScrolling = Infinity;
       InputStore.setEditor(this.props.ace, editor);
     },

@@ -5,6 +5,7 @@
     , ReactDOM = require('react-dom')
     , DiffApp = require('./components/DiffApp');
 
+  require("react-tap-event-plugin")();
   require("../css/site.less");
 
   ReactDOM.render(
