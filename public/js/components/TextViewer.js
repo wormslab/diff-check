@@ -7,7 +7,7 @@
   let TextViewer = React.createClass({
     componentDidMount: function() {
       let editor = ace.edit(this.props.ace);
-      editor.setTheme("ace/theme/github");
+      editor.setTheme("ace/theme/monokai");
       editor.getSession().setMode("ace/mode/diff");
       editor.setReadOnly(true);
       editor.$blockScrolling = Infinity;
