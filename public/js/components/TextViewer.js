@@ -46,21 +46,28 @@
               }
             } else if (obj[key]['type'] === 'LO'){
               if (side === 'original') {
+                editor.setHighlightActiveLine(true);
                 editor.insert(key + ' = ' + obj[key]['lv'] + '\n');
                 let defaultLength = key.length + 3;
                 let pos = editor.getCursorPosition();
                 let R = ace.require("ace/range").Range;
                 var range = new R(pos.row - 1, 0, pos.row - 1, defaultLength + obj[key]['lv'].length);
                 var marker = editor.getSession().addMarker(range,"ace_added_area", "text");
+              } else {
+                editor.insert('-\n');
               }
             } else if (obj[key]['type'] === 'RO'){
               if (side === 'changed') {
+                editor.setHighlightActiveLine(true);
+                editor.setHighlightGutterLine();
                 editor.insert(key + ' = ' + obj[key]['rv'] + '\n');
                 let defaultLength = key.length + 3;
                 let pos = editor.getCursorPosition();
                 let R = ace.require("ace/range").Range;
                 var range = new R(pos.row - 1, 0, pos.row - 1, defaultLength + obj[key]['rv'].length);
                 var marker = editor.getSession().addMarker(range,"ace_added_area", "text");
+              } else {
+                editor.insert('-\n');
               }
             }
           }
