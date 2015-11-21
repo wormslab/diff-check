@@ -11,11 +11,26 @@
 
   const RaisedButton = require('material-ui/lib/raised-button');
   const FontIcon = require('material-ui/lib/font-icon');
+  var DefaultRawTheme = require('../lib/rawTheme');
+  var ThemeManager = require('material-ui/lib/styles/theme-manager');
 
   let DiffApp = React.createClass({
 
+    childContextTypes: {
+      muiTheme: React.PropTypes.object
+    },
+
+    getChildContext: function getChildContext() {
+      return {
+        muiTheme: this.state.muiTheme
+      };
+    },
+
     getInitialState: function() {
-      return { complete: false };
+      let theme = this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme)
+      theme.raisedButton.secondaryColor = "#E56425";
+      theme.fontIcon = { color: "white", verticalAlign: "middle", marginLeft: "5px" }
+      return { complete: false, muiTheme: theme };
     },
 
     submitForComparison: function() {
@@ -38,7 +53,7 @@
           <EditorArea />
           <div className="flex-row-center-center flex-row-max">
             <RaisedButton secondary={true} onClick={this.submitForComparison} label="Check diff" labelPosition="after">
-              <FontIcon style={{color: "white", verticalAlign: "middle", marginLeft: "5px"}} className="material-icons" >autorenew</FontIcon>
+              <FontIcon style={this.state.muiTheme.fontIcon} className="material-icons" >autorenew</FontIcon>
             </RaisedButton>
           </div>
         </div>

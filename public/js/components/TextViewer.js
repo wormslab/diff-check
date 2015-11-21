@@ -75,7 +75,7 @@
       return (
         <div className="text-box">
           <div className="text-label">
-            <span className="label label-default">{this.props.desc}</span>
+            <span className="label">{this.props.desc}</span>
           </div>
           <div id={this.props.ace} className="input-textarea"></div>
         </div>

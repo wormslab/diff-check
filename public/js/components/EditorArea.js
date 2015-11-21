@@ -10,10 +10,10 @@
       return (
         <div className="flex-row-center-center flex-row-max">
           <div className="text-area">
-            <TextEditor ace={DC.ORIGINAL_EDITOR} side="original" desc="ORIGINAL TEXT" />
+            <TextEditor ace={DC.ORIGINAL_EDITOR} side="original" desc="Original text" />
           </div>
           <div className="text-area">
-            <TextEditor ace={DC.CHANGED_EDITOR} side="changed" desc="CHANGED TEXT" />
+            <TextEditor ace={DC.CHANGED_EDITOR} side="changed" desc="Changed text" />
           </div>
         </div>
       );

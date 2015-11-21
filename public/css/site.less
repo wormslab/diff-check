@@ -1,11 +1,49 @@
 body {
   margin: 0;
+  background-color: #F4F4F4;
+  font-family: Roboto, sans-serif;
   div {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
 }
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url('/font/google-material-font.woff2') format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 .flex-container {
   display: -webkit-flex;
   display:         flex;
@@ -77,28 +115,6 @@ body {
   .flex-wrap;
 }
 
-.navigation {
-  height: 45px;
-  background-color: #373A3C;
-  color: white;
-
-  .navigation-item {
-    flex: 1;
-    text-align: center;
-  }
-  .navigation-clear-space {
-    flex: 3;
-  }
-  .navigation-buttons {
-    display: -webkit-flex;
-    display:         flex;
-    justify-content: flex-end;
-  }
-  button {
-    margin: 12px;
-  }
-}
-
 .flex-row-max {
   -webkit-flex: 0 1 100%;
   flex: 0 1 100%;
@@ -145,4 +161,11 @@ body {
   position:absolute;
   z-index:20;
   background-color:#EAFFEA;
+}
+
+span.label {
+  display: inline-block;
+  border-bottom: 5px solid #3C4452;
+  padding-right: 20px;
+  margin: 10px 0 10px 0;
 }
